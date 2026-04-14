@@ -1,0 +1,86 @@
+body, html { 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Press Start 2P', cursive;
+    cursor: url('https://cur.cursors-4u.net/symbols/sym-9/sym833.cur'), auto; /* Cursor de coração */
+}
+.pixelated { image-rendering: pixelated; }
+
+/* ANIMAÇÕES */
+@keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
+.animate-float { animation: float 3s ease-in-out infinite; }
+
+@keyframes dialogPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+.animate-dialogPulse { animation: dialogPulse 2s ease-in-out infinite; }
+
+@keyframes walk { from { background-position-x: 0px; } to { background-position-x: -128px; } }
+.walking { animation: walk 0.6s steps(2) infinite; }
+
+@keyframes heartFloat {
+    0% { transform: translateX(-50%) translateY(0) scale(0); opacity: 0; }
+    30% { transform: translateX(-50%) translateY(-15px) scale(1.2); opacity: 1; }
+    100% { transform: translateX(-50%) translateY(-40px) scale(1); opacity: 0; }
+}
+
+/* SPRITES DO MAPA */
+.sprite-container {
+    width: 64px; height: 64px; position: absolute;
+    cursor: pointer; z-index: 10;
+    display: flex; align-items: center; justify-content: center;
+}
+
+.pixel-sprite {
+    width: 64px; height: 64px;
+    background-size: 128px 192px;
+    image-rendering: pixelated;
+    background-repeat: no-repeat;
+}
+
+.gengar-sprite { background-image: url('../../assets/sprite_gengar.png'); }
+.snorlax-sprite { background-image: url('../../assets/sprite_snorlax.png'); }
+
+.facing-back  { background-position-y: 0px; }
+.facing-front { background-position-y: -64px; }
+.facing-side  { background-position-y: -128px; }
+.flip { transform: scaleX(-1); }
+
+.heart-pop {
+    position: absolute; top: -20px; left: 50%;
+    transform: translateX(-50%); font-size: 20px;
+    pointer-events: none; animation: heartFloat 1s ease-out forwards;
+}
+
+/* SISTEMA DA POKÉBOLA (AMPLIADO) */
+#pokebola-container { width: 128px; height: 128px; position: relative; }
+
+#pokebola-sprite {
+    width: 128px; height: 128px;
+    background-image: url('../../assets/pokebola.png');
+    background-repeat: no-repeat;
+    background-size: 384px 128px; 
+    transition: background-position 0.1s steps(1);
+    image-rendering: pixelated;
+}
+
+.facing-closed       { background-position: 0px 0px; }
+.facing-intermediate { background-position: -128px 0px; }
+.facing-open-light   { background-position: -256px 0px; }
+
+/* HUD E MENUS */
+.hud-box { border-radius: 0 12px 0 12px; box-shadow: inset -3px -3px 0px #202020; }
+#hp-player, #hp-enemy { box-shadow: inset 0 1px 0 rgba(255,255,255,0.4); }
+.hp-low { background-color: #f85838 !important; }
+
+.menu-btn {
+    font-size: 8px; border: 2px solid #000;
+    background: #fff; cursor: pointer; transition: 0.1s;
+    display: flex; align-items: center; justify-content: center;
+}
+.menu-btn:hover { background: #eee; transform: scale(0.95); }
+
+/* CARD DE INFO FOFO */
+#info-box { 
+    border-radius: 20px; 
+    border: 4px solid #ffb6c1; /* Borda rosa claro */
+    box-shadow: 0 10px 25px rgba(255, 182, 193, 0.4);
+}
