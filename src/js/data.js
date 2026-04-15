@@ -1,8 +1,8 @@
 // src/js/data.js
 export const loveLetters = [
-    "Eu escolho você",
-    "Cada dia ao seu lado é uma nova insígnia que eu conquisto.",
-    "Meu lugar favorito no mundo é dentro do seu abraço.",
+    "Eu escolho você.❤️",
+    "Cada dia ao seu lado é uma nova insígnia que eu conquisto.❤️",
+    "Meu lugar favorito no mundo é dentro do seu abraço.❤️",
     "Obrigado por ser minha melhor aventura. ❤️"
 ];
 
