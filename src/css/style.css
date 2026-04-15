@@ -1,86 +1,183 @@
+/* src/css/style.css */
+:root {
+    --primary-pink: #ffb6c1;
+    --secondary-pink: #ff85a2;
+    --primary-blue: #a2d2ff;
+    --hp-green: #4ade80;
+    --hp-red: #f87171;
+    --bg-pixel: #fdfdfd;
+}
+
 body, html { 
-    margin: 0; 
-    padding: 0; 
+    margin: 0; padding: 0; 
     font-family: 'Press Start 2P', cursive;
-    cursor: url('https://cur.cursors-4u.net/symbols/sym-9/sym833.cur'), auto; /* Cursor de coração */
-}
-.pixelated { image-rendering: pixelated; }
-
-/* ANIMAÇÕES */
-@keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
-.animate-float { animation: float 3s ease-in-out infinite; }
-
-@keyframes dialogPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
-.animate-dialogPulse { animation: dialogPulse 2s ease-in-out infinite; }
-
-@keyframes walk { from { background-position-x: 0px; } to { background-position-x: -128px; } }
-.walking { animation: walk 0.6s steps(2) infinite; }
-
-@keyframes heartFloat {
-    0% { transform: translateX(-50%) translateY(0) scale(0); opacity: 0; }
-    30% { transform: translateX(-50%) translateY(-15px) scale(1.2); opacity: 1; }
-    100% { transform: translateX(-50%) translateY(-40px) scale(1); opacity: 0; }
+    cursor: url('https://cur.cursors-4u.net/symbols/sym-9/sym833.cur'), auto;
 }
 
-/* SPRITES DO MAPA */
+.pixelated { 
+    image-rendering: pixelated; 
+    image-rendering: crisp-edges;
+}
+
+/* --- MAPA E CLIMA --- */
+#main-game > img {
+    z-index: 0;
+    transition: filter 3s ease-in-out;
+}
+
+.night-mode {
+    filter: brightness(0.6) sepia(0.3) hue-rotate(200deg);
+}
+
+/* --- NOVOS ELEMENTOS --- */
+.shiny-effect {
+    filter: hue-rotate(150deg) brightness(1.2) saturate(1.5);
+}
+
+.mail-icon {
+    position: absolute;
+    top: 20px;       /* Alterado para o canto superior */
+    right: 20px;     /* Alterado para o canto direito */
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 100;    /* Aumentado para ficar à frente da barra de vida */
+    transition: transform 0.3s ease;
+}
+.mail-icon:hover { transform: scale(1.2); }
+
+#letter-box {
+    border: 6px double #f87171;
+    background: #fff5f5;
+}
+
+@keyframes heart-float-up {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-120px) scale(2); opacity: 0; }
+}
+.mimo-heart {
+    position: absolute;
+    font-size: 40px;
+    pointer-events: none;
+    animation: heart-float-up 1.5s ease-out forwards;
+    z-index: 100;
+}
+
+/* --- ANIMAÇÕES EXISTENTES --- */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    50% { transform: translateX(8px); }
+    75% { transform: translateX(-8px); }
+}
+.animate-shake { animation: shake 0.2s ease-in-out 2; }
+
+@keyframes hop {
+    0%, 100% { transform: scaleX(var(--flip, 1)) translateY(0); }
+    50% { transform: scaleX(var(--flip, 1)) translateY(-20px); }
+}
+
+@keyframes heart-fly {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+    100% { transform: translate(calc(-50% + var(--target-x)), calc(-50% + var(--target-y))) scale(1.5); opacity: 0; }
+}
+
+@keyframes walk-anim {
+    from { background-position-x: 0px; }
+    to { background-position-x: -160px; } 
+}
+
+/* --- SPRITES --- */
 .sprite-container {
-    width: 64px; height: 64px; position: absolute;
-    cursor: pointer; z-index: 10;
-    display: flex; align-items: center; justify-content: center;
+    width: 80px; 
+    height: 80px;
+    position: absolute; 
+    cursor: pointer; 
+    z-index: 10;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.sprite-container:hover .pixel-sprite { 
+    animation: hop 0.5s ease-out infinite; 
 }
 
 .pixel-sprite {
-    width: 64px; height: 64px;
-    background-size: 128px 192px;
-    image-rendering: pixelated;
+    width: 80px; 
+    height: 80px;
     background-repeat: no-repeat;
+    image-rendering: pixelated;
+    background-size: 160px 240px; 
+    transform: scaleX(var(--flip, 1));
+    transition: transform 0.2s ease-in-out;
 }
+
+.facing-back  { background-position-y: 0px; }
+.facing-front { background-position-y: -80px; }
+.facing-side  { background-position-y: -160px; }
+
+.walking { animation: walk-anim 0.5s steps(2) infinite; }
 
 .gengar-sprite { background-image: url('../../assets/sprite_gengar.png'); }
 .snorlax-sprite { background-image: url('../../assets/sprite_snorlax.png'); }
 
-.facing-back  { background-position-y: 0px; }
-.facing-front { background-position-y: -64px; }
-.facing-side  { background-position-y: -128px; }
-.flip { transform: scaleX(-1); }
-
-.heart-pop {
-    position: absolute; top: -20px; left: 50%;
-    transform: translateX(-50%); font-size: 20px;
-    pointer-events: none; animation: heartFloat 1s ease-out forwards;
+.particle-heart {
+    position: absolute; 
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none; 
+    z-index: 100;
+    font-size: 20px;
+    animation: heart-fly 0.8s ease-out forwards;
 }
 
-/* SISTEMA DA POKÉBOLA (AMPLIADO) */
-#pokebola-container { width: 128px; height: 128px; position: relative; }
-
-#pokebola-sprite {
-    width: 128px; height: 128px;
-    background-image: url('../../assets/pokebola.png');
-    background-repeat: no-repeat;
-    background-size: 384px 128px; 
-    transition: background-position 0.1s steps(1);
-    image-rendering: pixelated;
+/* --- UI COMPONENTS --- */
+.hud-box { 
+    border: 4px double #000; 
+    border-radius: 8px;
+    background: var(--bg-pixel) !important; 
+    color: #333 !important;
 }
 
-.facing-closed       { background-position: 0px 0px; }
-.facing-intermediate { background-position: -128px 0px; }
-.facing-open-light   { background-position: -256px 0px; }
+#info-box, .gallery-content {
+    border: 6px double var(--secondary-pink);
+    border-radius: 15px; 
+    background: white;
+    box-shadow: 8px 8px 0 rgba(0,0,0,0.1);
+}
 
-/* HUD E MENUS */
-.hud-box { border-radius: 0 12px 0 12px; box-shadow: inset -3px -3px 0px #202020; }
-#hp-player, #hp-enemy { box-shadow: inset 0 1px 0 rgba(255,255,255,0.4); }
-.hp-low { background-color: #f85838 !important; }
+.poke-desc {
+    font-family: sans-serif; 
+    letter-spacing: 0.5px; 
+    line-height: 1.4;
+    white-space: pre-wrap;
+}
 
 .menu-btn {
-    font-size: 8px; border: 2px solid #000;
-    background: #fff; cursor: pointer; transition: 0.1s;
-    display: flex; align-items: center; justify-content: center;
+    border: 2px solid #000; 
+    background: #fff;
+    transition: all 0.1s; 
+    cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
 }
-.menu-btn:hover { background: #eee; transform: scale(0.95); }
+.menu-btn:hover { background: var(--primary-pink); color: white; }
+.menu-btn:active { transform: translate(2px, 2px); }
 
-/* CARD DE INFO FOFO */
-#info-box { 
-    border-radius: 20px; 
-    border: 4px solid #ffb6c1; /* Borda rosa claro */
-    box-shadow: 0 10px 25px rgba(255, 182, 193, 0.4);
+/* --- POKÉBOLA --- */
+#pokebola-sprite {
+    width: 98px; 
+    height: 150px;
+    background-image: url('../../assets/pokebola.png');
+    background-size: 294px 150px; 
+    image-rendering: pixelated;
+}
+.facing-closed { background-position: 0px 0px; }
+.facing-intermediate { background-position: -98px 0px; }
+.facing-open-light { background-position: -196px 0px; }
+
+@media (max-width: 640px) {
+    .command-bar { height: auto; min-height: 120px; flex-direction: column; }
+    .command-bar > div { width: 100% !important; }
+    .menu-btn { font-size: 8px; padding: 10px; }
 }
